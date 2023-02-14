@@ -16,9 +16,7 @@ function readFile(file) {
 }
 
 function findDiffToJson(json1, json2) {
-  const firstKeys = Object.keys(json1);
-  const secondKeys = Object.keys(json2);
-  const keys = _.sortBy(_.union(firstKeys, secondKeys));
+  const keys = _.sortBy(_.union(Object.keys(json1), Object.keys(json2)));
 
   function notFoundOrDifferent(key, obj1, obj2) {
     return !Object.prototype.hasOwnProperty.call(obj2, key) || obj1[key] !== obj2[key];
