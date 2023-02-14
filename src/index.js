@@ -16,15 +16,20 @@ function readFile(file) {
 }
 
 function findDiffToJson(json1, json2) {
-  const firstKeys = _.sortBy(Object.keys(json1));
-  const secondKeys = _.sortBy(Object.keys(json2));
-  const keys = _.union(firstKeys, secondKeys);
+  const firstKeys = Object.keys(json1);
+  const secondKeys = Object.keys(json2);
+  const keys = _.sortBy(_.union(firstKeys, secondKeys));
+
+  function notFoundOrDifferent(key, obj1, obj2) {
+    return !Object.prototype.hasOwnProperty.call(obj2, key) || obj1[key] !== obj2[key];
+  }
+
   for (let i = 0; i < keys.length; i += 1) {
     const key = keys[i];
-    if (!Object.prototype.hasOwnProperty.call(json2, key) || json2[key] !== json1[key]) {
+    if (notFoundOrDifferent(key, json1, json2)) {
       diff[`- ${key}`] = json1[key];
     }
-    if (!Object.prototype.hasOwnProperty.call(json1, key) || json1[key] !== json2[key]) {
+    if (notFoundOrDifferent(key, json2, json1)) {
       diff[`+ ${key}`] = json2[key];
     }
     if (json1[key] === json2[key]) {
