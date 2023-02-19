@@ -1,18 +1,20 @@
 import _ from 'lodash';
 
+const spaces = '    ';
+
+const diffSymbol = {
+  added: '  + ',
+  deleted: '  - ',
+  equal: spaces,
+};
+
 const makeStylishDiff = (diff) => {
-  const diffSymbol = {
-    added: '  + ',
-    deleted: '  - ',
-    equal: '    ',
-  };
 
   const iter = (nest, depth) => {
     if (!_.isPlainObject(nest)) {
       return `${nest}`;
     }
 
-    const spaces = '    ';
     const endBracketPadding = spaces.repeat(depth);
     const padding = `${spaces.repeat(depth + 1)}`;
     const sorted = _.sortBy(Object.entries(nest));
@@ -27,12 +29,10 @@ const makeStylishDiff = (diff) => {
         return [...acc, lineMaker(key, nest[key].value, newPadding),
           lineMaker(key, nest[key].value2, newPadding2)];
       }
-
       if (status) {
         const newPadding = `${spaces.repeat(depth)}${diffSymbol[status]}`;
         return [...acc, lineMaker(key, nest[key].value, newPadding)];
       }
-
       return [...acc, lineMaker()];
     }, []);
     return ['{', ...lines, `${endBracketPadding}}`].join('\n');
