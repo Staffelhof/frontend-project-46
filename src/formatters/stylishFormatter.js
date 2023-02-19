@@ -9,7 +9,6 @@ const diffSymbol = {
 };
 
 const makeStylishDiff = (diff) => {
-
   const iter = (nest, depth) => {
     if (!_.isPlainObject(nest)) {
       return `${nest}`;
