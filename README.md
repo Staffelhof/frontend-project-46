@@ -11,5 +11,4 @@
 
 [Nested json and yaml - stylish](https://asciinema.org/a/yAR8OmonvX1JjQpxcjwjhcMHz)
 
-gendiff --format=plain __fixtures__/nested1.json __fixtures__/nested2.json
-gendiff --format=plain __fixtures__/nested1.yaml __fixtures__/nested2.yaml
+
