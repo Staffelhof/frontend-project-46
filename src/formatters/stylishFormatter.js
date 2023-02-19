@@ -12,23 +12,24 @@ const makeStylishDiff = (diff) => {
       return `${nest}`;
     }
 
-    const endBracketPadding = '    '.repeat(depth);
-    const padding = `${'    '.repeat(depth + 1)}`;
+    const spaces = '    ';
+    const endBracketPadding = spaces.repeat(depth);
+    const padding = `${spaces.repeat(depth + 1)}`;
     const sorted = _.sortBy(Object.entries(nest));
 
     const lines = sorted.reduce((acc, [key, value]) => {
       const lineMaker = (k = key, v = value, p = padding) => `${p}${k}: ${iter(v, depth + 1)}`;
-      const status = (value || { }).status;
+      const { status } = value || { };
 
       if (status === 'changed') {
-        const newPadding = `${'    '.repeat(depth)}${diffSymbol.deleted}`;
-        const newPadding2 = `${'    '.repeat(depth)}${diffSymbol.added}`;
+        const newPadding = `${spaces.repeat(depth)}${diffSymbol.deleted}`;
+        const newPadding2 = `${spaces.repeat(depth)}${diffSymbol.added}`;
         return [...acc, lineMaker(key, nest[key].value, newPadding),
           lineMaker(key, nest[key].value2, newPadding2)];
       }
 
       if (status) {
-        const newPadding = `${'    '.repeat(depth)}${diffSymbol[status]}`;
+        const newPadding = `${spaces.repeat(depth)}${diffSymbol[status]}`;
         return [...acc, lineMaker(key, nest[key].value, newPadding)];
       }
 

@@ -2,7 +2,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import _ from 'lodash';
 import jsYaml from 'js-yaml';
-import formatDiff from "./formatter.js";
+import formatDiff from './formatters/index.js';
 
 function filenameWithDirectory(filename) {
   const separator = path.sep;
@@ -21,22 +21,22 @@ const findDiff = (file1, file2) => {
     const [value1, value2] = [file1[key], file2[key]];
 
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      return {...acc, [key]: findDiff(value1, value2)};
+      return { ...acc, [key]: findDiff(value1, value2) };
     }
 
     if (!_.has(file1, key)) {
-      return {...acc, [key]: {value: value2, status: 'added'}};
+      return { ...acc, [key]: { value: value2, status: 'added' } };
     }
     if (!_.has(file2, key)) {
-      return {...acc, [key]: {value: value1, status: 'deleted'}};
+      return { ...acc, [key]: { value: value1, status: 'deleted' } };
     }
     if (_.isEqual(value1, value2)) {
-      return {...acc, [key]: {value: value1, status: 'equal'}};
+      return { ...acc, [key]: { value: value1, status: 'equal' } };
     }
     if (!_.isEqual(value1, value2)) {
-      return {...acc, [key]: {value: value1, value2, status: 'changed'}};
+      return { ...acc, [key]: { value: value1, value2, status: 'changed' } };
     }
-    return (console.error('Unexpected values'));
+    return null;
   }, {});
 };
 
