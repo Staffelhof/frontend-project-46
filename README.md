@@ -7,5 +7,6 @@
 
 [Plain json](https://asciinema.org/a/WAV4kFcFfHGqRqcKDtsM6hGFK)
 
-[Plain yaml](https://asciinema.org/a/vGyOpXpTbnKyi3rnXTKmaDsTo
-)
+[Plain yaml](https://asciinema.org/a/vGyOpXpTbnKyi3rnXTKmaDsTo)
+
+[Nested json and yaml - stylish](https://asciinema.org/a/yAR8OmonvX1JjQpxcjwjhcMHz)

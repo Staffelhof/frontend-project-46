@@ -2,8 +2,7 @@ import path from 'node:path';
 import fs from 'node:fs';
 import _ from 'lodash';
 import jsYaml from 'js-yaml';
-
-const diff = {};
+import formatDiff from "./formatter.js";
 
 function filenameWithDirectory(filename) {
   const separator = path.sep;
@@ -15,29 +14,31 @@ function readFile(file) {
   return fs.readFileSync(pathToFile, 'utf8');
 }
 
-function findDiffToJson(json1, json2) {
-  const firstKeys = Object.keys(json1);
-  const secondKeys = Object.keys(json2);
-  const unsortedKeys = _.union(firstKeys, secondKeys);
-  const keys = _.sortBy(unsortedKeys);
+const findDiff = (file1, file2) => {
+  const keys = _.union(Object.keys(file1), Object.keys(file2));
+  const sorted = _.sortBy(keys);
+  return sorted.reduce((acc, key) => {
+    const [value1, value2] = [file1[key], file2[key]];
 
-  function notFoundOrDifferent(key, obj1, obj2) {
-    return !Object.prototype.hasOwnProperty.call(obj2, key) || obj1[key] !== obj2[key];
-  }
+    if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
+      return {...acc, [key]: findDiff(value1, value2)};
+    }
 
-  for (let i = 0; i < keys.length; i += 1) {
-    const key = keys[i];
-    if (notFoundOrDifferent(key, json1, json2)) {
-      diff[`- ${key}`] = json1[key];
+    if (!_.has(file1, key)) {
+      return {...acc, [key]: {value: value2, status: 'added'}};
     }
-    if (notFoundOrDifferent(key, json2, json1)) {
-      diff[`+ ${key}`] = json2[key];
+    if (!_.has(file2, key)) {
+      return {...acc, [key]: {value: value1, status: 'deleted'}};
     }
-    if (json1[key] === json2[key]) {
-      diff[`  ${key}`] = json1[key];
+    if (_.isEqual(value1, value2)) {
+      return {...acc, [key]: {value: value1, status: 'equal'}};
     }
-  }
-}
+    if (!_.isEqual(value1, value2)) {
+      return {...acc, [key]: {value: value1, value2, status: 'changed'}};
+    }
+    return (console.error('Unexpected values'));
+  }, {});
+};
 
 const getParser = (extName) => {
   let parser;
@@ -50,7 +51,7 @@ const getParser = (extName) => {
   return parser;
 };
 
-const readFiles = (file1, file2, options) => {
+const getDiff = (file1, file2) => {
   const f1 = readFile(file1);
   const f2 = readFile(file2);
   const parser1 = getParser(path.extname(file1));
@@ -58,14 +59,12 @@ const readFiles = (file1, file2, options) => {
   const parsed1 = parser1(f1);
   const parsed2 = parser2(f2);
 
-  if (options.format === 'json' || options === 'json') {
-    findDiffToJson(parsed1, parsed2);
-  }
+  return findDiff(parsed1, parsed2);
 };
 
-const genDiff = (filepath1, filepath2, f = 'json') => {
-  readFiles(filepath1, filepath2, f);
-  return JSON.stringify(diff, null, 2).replaceAll('"', '');
+const genDiff = (filepath1, filepath2, f = 'stylish') => {
+  const diff = getDiff(filepath1, filepath2);
+  return formatDiff(diff, f);
 };
 
 export default genDiff;
