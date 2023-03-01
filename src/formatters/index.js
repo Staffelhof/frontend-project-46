@@ -3,17 +3,16 @@ import makePlainDiff from './plainFormatter.js';
 import makeJsonDiff from './jsonFormatter.js';
 
 const formatDiff = (diff, options) => {
-  let format = null;
   if (options.format === 'stylish' || options === 'stylish') {
-    format = makeStylishDiff(diff);
+    return makeStylishDiff(diff);
   }
   if (options.format === 'plain' || options === 'plain') {
-    format = makePlainDiff(diff);
+    return makePlainDiff(diff);
   }
   if (options.format === 'json' || options === 'json') {
-    format = makeJsonDiff(diff);
+    return makeJsonDiff(diff);
   }
-  return format;
+  return null;
 };
 
 export default formatDiff;
