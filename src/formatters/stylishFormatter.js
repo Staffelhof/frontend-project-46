@@ -5,7 +5,7 @@ const spaces = '    ';
 const diffSymbol = {
   added: '  + ',
   deleted: '  - ',
-  equal: spaces,
+  equal: '    ',
 };
 
 const makeStylishDiff = (diff) => {

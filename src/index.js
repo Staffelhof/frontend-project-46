@@ -30,13 +30,10 @@ const findDiff = (file1, file2) => {
     if (!_.has(file2, key)) {
       return { ...acc, [key]: { value: value1, status: 'deleted' } };
     }
-    if (_.isEqual(value1, value2)) {
-      return { ...acc, [key]: { value: value1, status: 'equal' } };
-    }
     if (!_.isEqual(value1, value2)) {
       return { ...acc, [key]: { value: value1, value2, status: 'changed' } };
     }
-    return null;
+    return { ...acc, [key]: { value: value1, status: 'equal' } };
   }, {});
 };
 

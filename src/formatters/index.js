@@ -1,14 +1,19 @@
 import makeStylishDiff from './stylishFormatter.js';
 import makePlainDiff from './plainFormatter.js';
+import makeJsonDiff from './jsonFormatter.js';
 
 const formatDiff = (diff, options) => {
+  let format = null;
   if (options.format === 'stylish' || options === 'stylish') {
-    return makeStylishDiff(diff);
+    format = makeStylishDiff(diff);
   }
   if (options.format === 'plain' || options === 'plain') {
-    return makePlainDiff(diff);
+    format = makePlainDiff(diff);
   }
-  return null;
+  if (options.format === 'json' || options === 'json') {
+    format = makeJsonDiff(diff);
+  }
+  return format;
 };
 
 export default formatDiff;
