@@ -23,13 +23,13 @@ const findDiff = (file1, file2) => {
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
       result = { ...acc, [key]: findDiff(value1, value2) };
     } else if (!_.has(file1, key)) {
-      result =  { ...acc, [key]: { value: value2, status: 'added' } };
+      result = { ...acc, [key]: { value: value2, status: 'added' } };
     } else if (!_.has(file2, key)) {
-      result =  { ...acc, [key]: { value: value1, status: 'deleted' } };
+      result = { ...acc, [key]: { value: value1, status: 'deleted' } };
     } else if (!_.isEqual(value1, value2)) {
-      result =  { ...acc, [key]: { value: value1, value2, status: 'changed' } };
+      result = { ...acc, [key]: { value: value1, value2, status: 'changed' } };
     } else {
-      result = {...acc, [key]: {value: value1, status: 'equal'}};
+      result = { ...acc, [key]: { value: value1, status: 'equal' } };
     }
     return result;
   }, {});
