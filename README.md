@@ -11,4 +11,4 @@
 
 [Nested json and yaml - stylish](https://asciinema.org/a/yAR8OmonvX1JjQpxcjwjhcMHz)
 
-
+[Plain format nested json and yaml](https://asciinema.org/a/LIUWjBoFLqxCQ28oIS3XP5QgT)
