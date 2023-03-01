@@ -38,14 +38,13 @@ const findDiff = (file1, file2) => {
 };
 
 const getParser = (extName) => {
-  let parser;
   if (extName === '.json') {
-    parser = JSON.parse;
+    return JSON.parse;
   }
   if (extName === '.yaml' || extName === '.yml') {
-    parser = jsYaml.load;
+    return jsYaml.load;
   }
-  return parser;
+  return null;
 };
 
 const getDiff = (file1, file2) => {
