@@ -21,15 +21,15 @@ const findDiff = (file1, file2) => {
     const [value1, value2] = [file1[key], file2[key]];
     const result = {};
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      _.extend(result, findDiff(value1, value2))
+      _.extend(result, findDiff(value1, value2));
     } else if (!_.has(file1, key)) {
-     _.extend(result, { value: value2, status: 'added' })
+      _.extend(result, { value: value2, status: 'added' });
     } else if (!_.has(file2, key)) {
-     _.extend(result, { value: value1, status: 'deleted' })
+      _.extend(result, { value: value1, status: 'deleted' });
     } else if (!_.isEqual(value1, value2)) {
-      _.extend(result, { value: value1, value2, status: 'changed' })
+      _.extend(result, { value: value1, value2, status: 'changed' });
     } else {
-      _.extend(result,{ value: value1, status: 'equal' })
+      _.extend(result, { value: value1, status: 'equal' });
     }
     return { ...acc, [key]: result };
   }, {});
