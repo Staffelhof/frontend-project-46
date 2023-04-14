@@ -19,21 +19,17 @@ const findDiff = (file1, file2) => {
   const sorted = _.sortBy(keys);
   return sorted.reduce((acc, key) => {
     const [value1, value2] = [file1[key], file2[key]];
-
+    const result = { ...acc, [key]: { value: value1, status: 'equal' } };
     if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-      return { ...acc, [key]: findDiff(value1, value2) };
+      Object.assign(result, { [key]: findDiff(value1, value2) });
+    } else if (!_.has(file1, key)) {
+      Object.assign(result, { [key]: { value: value2, status: 'added' } });
+    } else if (!_.has(file2, key)) {
+      Object.assign(result, { [key]: { value: value1, status: 'deleted' } });
+    } else if (!_.isEqual(value1, value2)) {
+      Object.assign(result, { [key]: { value: value1, value2, status: 'changed' } });
     }
-
-    if (!_.has(file1, key)) {
-      return { ...acc, [key]: { value: value2, status: 'added' } };
-    }
-    if (!_.has(file2, key)) {
-      return { ...acc, [key]: { value: value1, status: 'deleted' } };
-    }
-    if (!_.isEqual(value1, value2)) {
-      return { ...acc, [key]: { value: value1, value2, status: 'changed' } };
-    }
-    return { ...acc, [key]: { value: value1, status: 'equal' } };
+    return result;
   }, {});
 };
 
