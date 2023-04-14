@@ -34,20 +34,7 @@ const findDiff = (file1, file2) => {
     return { ...acc, [key]: result };
   }, {});
 };
-// if (_.isPlainObject(value1) && _.isPlainObject(value2)) {
-//   return { ...acc, [key]: findDiff(value1, value2) };
-// }
-// console.log(value2)
-// if (!_.has(file1, key)) {
-//   return { ...acc, [key]: { value: value2, status: 'added' } };
-// }
-// if (!_.has(file2, key)) {
-//   return { ...acc, [key]: { value: value1, status: 'deleted' } };
-// }
-// if (!_.isEqual(value1, value2)) {
-//   return { ...acc, [key]: { value: value1, value2, status: 'changed' } };
-// }
-// return { ...acc, [key]: { value: value1, status: 'equal' } };
+
 const getParser = (extName) => {
   if (extName === '.json') {
     return JSON.parse;
