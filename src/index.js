@@ -71,7 +71,6 @@ const getDiff = (file1, file2) => {
 
 const genDiff = (filepath1, filepath2, f = 'stylish') => {
   const diff = getDiff(filepath1, filepath2);
-  console.log(diff)
   return formatDiff(diff, f);
 };
 
