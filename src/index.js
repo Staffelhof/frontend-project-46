@@ -4,14 +4,8 @@ import _ from 'lodash';
 import jsYaml from 'js-yaml';
 import formatDiff from './formatters/index.js';
 
-function filenameWithDirectory(filename) {
-  const separator = path.sep;
-  return filename.includes(separator);
-}
-
 function readFile(file) {
-  const pathToFile = filenameWithDirectory(file) ? file : path.resolve(process.cwd(), file);
-  return fs.readFileSync(pathToFile, 'utf8');
+  return fs.readFileSync(file, 'utf8');
 }
 
 const findDiff = (file1, file2) => {
@@ -56,9 +50,9 @@ const getDiff = (file1, file2) => {
   return findDiff(parsed1, parsed2);
 };
 
-const genDiff = (filepath1, filepath2, f = 'stylish') => {
+const genDiff = (filepath1, filepath2, format = 'stylish') => {
   const diff = getDiff(filepath1, filepath2);
-  return formatDiff(diff, f);
+  return formatDiff(diff, format);
 };
 
 export default genDiff;

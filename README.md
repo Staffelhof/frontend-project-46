@@ -5,32 +5,37 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/125d1e945e21014bbca2/test_coverage)](https://codeclimate.com/github/Staffelhof/frontend-project-46/test_coverage)
 
+# Diff application
+
 This is simple diff application, that takes two files and returns difference between them.
 Supported:
-file types ->  JSON and YAML
-formats -> plain, stylish and json
 
-Here is some examples for your information:
+File types:  **JSON** and **YAML**
 
-[Plain json](https://asciinema.org/a/WAV4kFcFfHGqRqcKDtsM6hGFK)
+Formats: _plain_, _stylish_ and _json_
 
-[Plain yaml](https://asciinema.org/a/vGyOpXpTbnKyi3rnXTKmaDsTo)
+### Here is some examples for your information:
 
-[Nested json and yaml - stylish](https://asciinema.org/a/yAR8OmonvX1JjQpxcjwjhcMHz)
+Plain Json
+[![Plain json](https://asciinema.org/a/WAV4kFcFfHGqRqcKDtsM6hGFK.png)](https://asciinema.org/a/WAV4kFcFfHGqRqcKDtsM6hGFK)
 
-[Nested json and yaml - plain text](https://asciinema.org/a/LIUWjBoFLqxCQ28oIS3XP5QgT)
+Plain yaml
+[![Plain yaml](https://asciinema.org/a/vGyOpXpTbnKyi3rnXTKmaDsTo.png)](https://asciinema.org/a/vGyOpXpTbnKyi3rnXTKmaDsTo)
+Nested json and yaml - stylish
+[![Nested json and yaml - stylish](https://asciinema.org/a/yAR8OmonvX1JjQpxcjwjhcMHz.png)](https://asciinema.org/a/yAR8OmonvX1JjQpxcjwjhcMHz)
+Nested json and yaml - plain text
+[![Nested json and yaml - plain text](https://asciinema.org/a/LIUWjBoFLqxCQ28oIS3XP5QgT.png)](https://asciinema.org/a/LIUWjBoFLqxCQ28oIS3XP5QgT)
+Nested json and yaml - json
+[![Nested json and yaml - json](https://asciinema.org/a/zIqHZXGxxpPVPCRM188YPfJG0.png)](https://asciinema.org/a/zIqHZXGxxpPVPCRM188YPfJG0)
 
-[Nested json and yaml - json](https://asciinema.org/a/zIqHZXGxxpPVPCRM188YPfJG0)
-
-
-
-Min specs:
+### Min specs:
 
 Node.js v18.12.0. with any supported OS.
 
-Installing instructions:
+### Installing instructions:
 
-clone project with 'git clone <ssh/url>'
-open a 'frontend-project-46' directory
-throw 'make install' and 'npm link' in console.
-and use gendiff
+```shell
+git clone https://github.com/Staffelhof/frontend-project-46.git && cd frontend-project-46 && make install && npm link
+```
+
+and use gendiff file1 file2
