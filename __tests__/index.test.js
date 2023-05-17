@@ -8,15 +8,10 @@ const __dirname = dirname(__filename);
 const getFixturePath = (filename) => join(__dirname, '..', '__fixtures__', filename);
 
 const extensions = ['json', 'yaml'];
-let stylishExpected;
-let plainExpected;
-let jsonExpected;
+const stylishExpected = stylishNestedResult;
+const plainExpected = plainResult;
+const jsonExpected = jsonResult;
 
-beforeAll(() => {
-  stylishExpected = stylishNestedResult;
-  plainExpected = plainResult;
-  jsonExpected = jsonResult;
-});
 test.each(extensions)('[%# TEST] %s format test for nested fixtures', (ext) => {
   const fixturePath = getFixturePath(`nested1.${ext}`);
   const fixturePath1 = getFixturePath(`nested2.${ext}`);
